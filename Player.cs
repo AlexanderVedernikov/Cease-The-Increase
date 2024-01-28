@@ -3,7 +3,9 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	private int _speed = 400;
+	private float _runSpeed = 350;
+    private float _jumpSpeed = -1000;
+    private float _gravity = 2500;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -18,12 +20,28 @@ public partial class Player : CharacterBody2D
 
     public void GetInput()
     {
-        Vector2 inputDir = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-        Velocity = inputDir * _speed;
+        var velocity = Velocity;
+        velocity.X = 0;
+
+        var right = Input.IsActionPressed("ui_right");
+        var left = Input.IsActionPressed("ui_left");
+        var jump = Input.IsActionPressed("ui_up");
+
+        if (IsOnFloor() && jump)
+            velocity.Y = _jumpSpeed;
+        if (right)
+            velocity.X += _runSpeed;
+        if (left)
+            velocity.X -= _runSpeed;
+
+        Velocity = velocity;
     }
 
     public override void _PhysicsProcess(double delta)
     {
+        var velocity = Velocity;
+        velocity.Y += _gravity * (float)delta;
+        Velocity = velocity;
         GetInput();
         MoveAndSlide();
     }
