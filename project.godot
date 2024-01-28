@@ -18,3 +18,7 @@ config/icon="res://icon.svg"
 [dotnet]
 
 project/assembly_name="CeaseTheIncrease"
+
+[editor]
+
+movie_writer/movie_file="C:/Temp/TestVideo.avi"

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Player : Node2D
+public partial class Player : CharacterBody2D
 {
 	private int _speed = 400;
 
@@ -13,24 +13,18 @@ public partial class Player : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		var velocity = Vector2.Zero;
-        if (Input.IsActionPressed("ui_up"))
-        {
-            velocity.Y += -1 * _speed;
-        }
-		if (Input.IsActionPressed("ui_down"))
-        {
-            velocity.Y += 1 * _speed;
-        }
-		if (Input.IsActionPressed("ui_left"))
-        {
-            velocity.X += -1 * _speed;
-        }
-		if (Input.IsActionPressed("ui_right"))
-        {
-            velocity.X += 1 * _speed;
-        }
-
-        Position += velocity * (float)delta;
+		
 	}
+
+    public void GetInput()
+    {
+        Vector2 inputDir = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+        Velocity = inputDir * _speed;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        GetInput();
+        MoveAndSlide();
+    }
 }
