@@ -6,7 +6,8 @@ using System.Numerics;
 public partial class Player : CharacterBody2D
 {
 	private float _runSpeed = 350;
-    private float _jumpSpeed = -1000;
+    private float _jumpStrength = -700;
+    private float _longJump = -20;
     private float _gravity = 2500;
     private int _direction = 1;
 
@@ -30,12 +31,18 @@ public partial class Player : CharacterBody2D
         var left = Input.IsActionPressed("ui_left");
         var jump = Input.IsActionPressed("ui_up");
 
-        if (IsOnFloor() && jump)
-            newVel.Y = _jumpSpeed;
-        if (right)
+        if (IsOnFloor() && jump){
+            newVel.Y += _jumpStrength;
+        } else if (jump){
+            newVel.Y += _longJump;
+        }
+        
+        if (right){
             newVel.X += _runSpeed;
-        if (left)
+        }
+        if (left){
             newVel.X -= _runSpeed;
+        }
 
         Velocity = newVel;
     }
