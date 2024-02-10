@@ -10,6 +10,8 @@ public partial class Player : CharacterBody2D
     private float _longJump = -30;
     private float _gravity = 3500;
     private int _direction = 1;
+
+    //The number of seconds the player has been idle (not moving)
     private double _idleTimer = 0;
     private AnimatedSprite2D _idleAnimation;
     private Sprite2D characterSprite;
@@ -23,12 +25,12 @@ public partial class Player : CharacterBody2D
         _idleAnimation.Show();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	// Called every frame. 'delta' is the elapsed time since the previous frame (in seconds).
 	public override void _Process(double delta)
 	{
-        _idleTimer += 1/delta; //Controls idle animation
+        _idleTimer += delta; //Controls idle animation
         GD.Print(_idleTimer);
-		if (_idleTimer > 10000){
+		if (_idleTimer >= 2){
             characterSprite.Hide();
             _idleAnimation.Show();
             _idleAnimation.Play("IdleAnimation");
@@ -40,7 +42,7 @@ public partial class Player : CharacterBody2D
 	}
 
     // Updates the player's velocity based on key presses
-    public void GetInput(double delta)
+    public void GetInput()
     {
         var newVel = Velocity;
         newVel.X = 0;
@@ -49,13 +51,13 @@ public partial class Player : CharacterBody2D
         var left = Input.IsActionPressed("ui_left");
         var jump = Input.IsActionPressed("ui_up");
 
-        if (right | left | jump){
+        if (right || left || jump){
             _idleTimer = 0;
         }
 
         if (IsOnFloor() && jump){
             newVel.Y += _jumpStrength;
-        } else if (jump){
+        } else if (jump && newVel.Y < 0){
             newVel.Y += _longJump;
         }
         
@@ -71,20 +73,20 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        // Apply gravity to velocity
+        // Apply gravity
         var newVel = Velocity;
         newVel.Y += _gravity * (float)delta;
         Velocity = newVel;
 
         // If the velocity and direction aren't the same, that means that the character has started moving in the opposite direction
-        if ((Mathf.Sign(newVel.X) != Mathf.Sign(_direction)) & (Mathf.Sign(newVel.X) != 0)){ 
+        if ((Mathf.Sign(newVel.X) != Mathf.Sign(_direction)) && (Mathf.Sign(newVel.X) != 0)){ 
             ApplyScale(new Godot.Vector2(-1, 1));
             _direction = _direction * -1;
         }
 
-        GetInput(delta);
+        GetInput();
 
-        // Magic method to update the player's position
+        // Magic method to update player's pos and resolve collision
         MoveAndSlide();
     }
 }
