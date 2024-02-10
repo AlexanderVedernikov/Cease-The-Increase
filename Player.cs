@@ -6,20 +6,37 @@ using System.Numerics;
 public partial class Player : CharacterBody2D
 {
 	private float _runSpeed = 350;
-    private float _jumpStrength = 700;
-    private float _longJump = 1200;
-    private float _gravity = 2500;
+    private float _jumpStrength = -700;
+    private float _longJump = -30;
+    private float _gravity = 3500;
     private int _direction = 1;
+    private double _idleTimer = 0;
+    private AnimatedSprite2D _idleAnimation;
+    private Sprite2D characterSprite;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+        _idleAnimation = GetNode<AnimatedSprite2D>("IdleAnimation");
+        characterSprite = GetNode<Sprite2D>("CharacterSprite");
+        characterSprite.Show();
+        _idleAnimation.Show();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
+        _idleTimer += 1/delta; //Controls idle animation
+        GD.Print(_idleTimer);
+		if (_idleTimer > 10000){
+            characterSprite.Hide();
+            _idleAnimation.Show();
+            _idleAnimation.Play("IdleAnimation");
+        } else {
+            _idleAnimation.Stop();
+            _idleAnimation.Hide();
+            characterSprite.Show();
+        }
 	}
 
     // Updates the player's velocity based on key presses
@@ -32,10 +49,14 @@ public partial class Player : CharacterBody2D
         var left = Input.IsActionPressed("ui_left");
         var jump = Input.IsActionPressed("ui_up");
 
+        if (right | left | jump){
+            _idleTimer = 0;
+        }
+
         if (IsOnFloor() && jump){
-            newVel.Y -= _jumpStrength;
-        } else if (jump && newVel.Y < 0){
-            newVel.Y -= (float)(_longJump*delta);
+            newVel.Y += _jumpStrength;
+        } else if (jump){
+            newVel.Y += _longJump;
         }
         
         if (right){
