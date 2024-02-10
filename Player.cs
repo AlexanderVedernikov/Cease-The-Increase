@@ -6,8 +6,8 @@ using System.Numerics;
 public partial class Player : CharacterBody2D
 {
 	private float _runSpeed = 350;
-    private float _jumpStrength = -700;
-    private float _longJump = -20;
+    private float _jumpStrength = 700;
+    private float _longJump = 1200;
     private float _gravity = 2500;
     private int _direction = 1;
 
@@ -22,7 +22,8 @@ public partial class Player : CharacterBody2D
 		
 	}
 
-    public void GetInput()
+    // Updates the player's velocity based on key presses
+    public void GetInput(double delta)
     {
         var newVel = Velocity;
         newVel.X = 0;
@@ -32,9 +33,9 @@ public partial class Player : CharacterBody2D
         var jump = Input.IsActionPressed("ui_up");
 
         if (IsOnFloor() && jump){
-            newVel.Y += _jumpStrength;
-        } else if (jump){
-            newVel.Y += _longJump;
+            newVel.Y -= _jumpStrength;
+        } else if (jump && newVel.Y < 0){
+            newVel.Y -= (float)(_longJump*delta);
         }
         
         if (right){
@@ -49,14 +50,20 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        // Apply gravity to velocity
         var newVel = Velocity;
         newVel.Y += _gravity * (float)delta;
         Velocity = newVel;
-        if ((Mathf.Sign(newVel.X) != Mathf.Sign(_direction)) & (Mathf.Sign(newVel.X) != 0)){ //If the velocity and direction aren't the same, that means that the character has started moving in the opposite direction
+
+        // If the velocity and direction aren't the same, that means that the character has started moving in the opposite direction
+        if ((Mathf.Sign(newVel.X) != Mathf.Sign(_direction)) & (Mathf.Sign(newVel.X) != 0)){ 
             ApplyScale(new Godot.Vector2(-1, 1));
             _direction = _direction * -1;
         }
-        GetInput();
+
+        GetInput(delta);
+
+        // Magic method to update the player's position
         MoveAndSlide();
     }
 }
