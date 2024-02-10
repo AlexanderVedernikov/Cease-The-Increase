@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://btad8547dd016"]
+[gd_scene load_steps=14 format=3 uid="uid://btad8547dd016"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_sty4c"]
 [ext_resource type="Texture2D" uid="uid://cwqsobiyt27ne" path="res://Swordsman/Swordsman.png" id="2_ltwk0"]
@@ -7,18 +7,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ee72"]
 atlas = ExtResource("3_31r2v")
 region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rkji1"]
-atlas = ExtResource("3_31r2v")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q3nep"]
-atlas = ExtResource("3_31r2v")
-region = Rect2(640, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i83iw"]
-atlas = ExtResource("3_31r2v")
-region = Rect2(960, 0, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_omy3a"]
 atlas = ExtResource("3_31r2v")
@@ -53,15 +41,6 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2ee72")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rkji1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q3nep")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i83iw")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_omy3a")
@@ -107,6 +86,7 @@ position = Vector2(10, -2)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_3x3w6")
 animation = &"IdleAnimation"
+frame_progress = 0.43644
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_n7yie")
