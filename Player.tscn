@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://btad8547dd016"]
+[gd_scene load_steps=15 format=3 uid="uid://btad8547dd016"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_sty4c"]
 [ext_resource type="Texture2D" uid="uid://cwqsobiyt27ne" path="res://Swordsman/Swordsman.png" id="2_ltwk0"]
 [ext_resource type="Texture2D" uid="uid://keacevqatuoq" path="res://Swordsman/Swordsman_Idle-Sheet.png" id="3_31r2v"]
+[ext_resource type="Texture2D" uid="uid://yq4dpu22n027" path="res://Swordsman/Swordsman_Crouch.png" id="3_nhi1v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ee72"]
 atlas = ExtResource("3_31r2v")
@@ -73,13 +74,18 @@ size = Vector2(60, 155)
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(500, 300)
-scale = Vector2(0.5, 0.5)
 script = ExtResource("1_sty4c")
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
 position = Vector2(10, -2)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_ltwk0")
+
+[node name="CrouchingSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(10, -2)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_nhi1v")
 
 [node name="IdleAnimation" type="AnimatedSprite2D" parent="."]
 position = Vector2(10, -2)

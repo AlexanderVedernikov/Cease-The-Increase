@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://wcnuudfmwa7s"]
+[gd_scene load_steps=5 format=3 uid="uid://wcnuudfmwa7s"]
 
 [ext_resource type="Script" path="res://node_2d.cs" id="1_o4d1t"]
 [ext_resource type="PackedScene" uid="uid://btad8547dd016" path="res://Player.tscn" id="2_prvr4"]
 [ext_resource type="PackedScene" uid="uid://c0o1itwx5dsir" path="res://Level1/Level1.tscn" id="2_wuhse"]
+[ext_resource type="PackedScene" uid="uid://c3t13qckex06a" path="res://Boss1.tscn" id="4_22im6"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_o4d1t")
@@ -10,3 +11,16 @@ script = ExtResource("1_o4d1t")
 [node name="Level" parent="." instance=ExtResource("2_wuhse")]
 
 [node name="Player" parent="." instance=ExtResource("2_prvr4")]
+position = Vector2(975, 874)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+scale = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 3480
+limit_bottom = 1080
+limit_smoothed = true
+position_smoothing_enabled = true
+
+[node name="Node2D" parent="." instance=ExtResource("4_22im6")]
+position = Vector2(2900, 753)

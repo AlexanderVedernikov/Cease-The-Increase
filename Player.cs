@@ -15,29 +15,35 @@ public partial class Player : CharacterBody2D
     private double _idleTimer = 0;
     private AnimatedSprite2D _idleAnimation;
     private Sprite2D characterSprite;
+    private Sprite2D crouchingSprite;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
         _idleAnimation = GetNode<AnimatedSprite2D>("IdleAnimation");
         characterSprite = GetNode<Sprite2D>("CharacterSprite");
+        crouchingSprite = GetNode<Sprite2D>("CrouchingSprite");
         characterSprite.Show();
-        _idleAnimation.Show();
+        _idleAnimation.Hide();
+        crouchingSprite.Hide();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame (in seconds).
 	public override void _Process(double delta)
 	{
-        _idleTimer += delta; //Controls idle animation
-        GD.Print(_idleTimer);
-		if (_idleTimer >= 2){
+        if (_idleTimer < 2){
+            _idleTimer += delta; //Controls idle animation
+        }
+		if (_idleTimer > 2){
             characterSprite.Hide();
             _idleAnimation.Show();
             _idleAnimation.Play("IdleAnimation");
         } else {
+            if (_idleAnimation.IsPlaying()){
             _idleAnimation.Stop();
             _idleAnimation.Hide();
             characterSprite.Show();
+            }
         }
 	}
 
@@ -50,8 +56,9 @@ public partial class Player : CharacterBody2D
         var right = Input.IsActionPressed("ui_right");
         var left = Input.IsActionPressed("ui_left");
         var jump = Input.IsActionPressed("ui_up");
+        var down = Input.IsActionPressed("ui_down");
 
-        if (right || left || jump){
+        if (right || left || jump || down){
             _idleTimer = 0;
         }
 
@@ -66,6 +73,13 @@ public partial class Player : CharacterBody2D
         }
         if (left){
             newVel.X -= _runSpeed;
+        }
+        if (down){ //Crouching animation
+            characterSprite.Hide();
+            crouchingSprite.Show();
+        } else {
+            crouchingSprite.Hide();
+            characterSprite.Show();
         }
 
         Velocity = newVel;
