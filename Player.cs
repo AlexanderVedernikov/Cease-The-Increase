@@ -34,7 +34,7 @@ public partial class Player : CharacterBody2D
         if (_idleTimer < 2){
             _idleTimer += delta; //Controls idle animation
         }
-		if (_idleTimer > 2){
+		if (_idleTimer > 2 && !_idleAnimation.IsPlaying()){
             characterSprite.Hide();
             _idleAnimation.Show();
             _idleAnimation.Play("IdleAnimation");
