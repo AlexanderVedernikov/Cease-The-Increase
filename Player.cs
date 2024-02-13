@@ -28,13 +28,12 @@ public partial class Player : CharacterBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame (in seconds).
 	public override void _Process(double delta)
 	{
-        _idleTimer += delta; //Controls idle animation
-        GD.Print(_idleTimer);
-		if (_idleTimer >= 2){
+        _idleTimer += delta; // Controls idle animation
+		if (_idleTimer >= 2 && !_idleAnimation.IsPlaying()){
             characterSprite.Hide();
             _idleAnimation.Show();
             _idleAnimation.Play("IdleAnimation");
-        } else {
+        } else if (_idleTimer < 2){
             _idleAnimation.Stop();
             _idleAnimation.Hide();
             characterSprite.Show();
