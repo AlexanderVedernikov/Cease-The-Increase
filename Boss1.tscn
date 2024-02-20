@@ -1,9 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://c3t13qckex06a"]
+[gd_scene load_steps=6 format=3 uid="uid://c3t13qckex06a"]
 
 [ext_resource type="Texture2D" uid="uid://cdopmot7phirn" path="res://Boss1/Picture1.png" id="1_jklbx"]
+[ext_resource type="Script" path="res://Rock.cs" id="2_6s57v"]
+[ext_resource type="Texture2D" uid="uid://b3hu1sl2xuvsf" path="res://Boss1/Rock.png" id="2_bftqu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3qpb"]
 size = Vector2(276, 368)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_frwrj"]
+radius = 163.132
+height = 423.781
 
 [node name="Node2D" type="CharacterBody2D"]
 position = Vector2(1756, 745)
@@ -13,3 +19,18 @@ texture = ExtResource("1_jklbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_i3qpb")
+
+[node name="Rock" type="RigidBody2D" parent="."]
+position = Vector2(-137, -29)
+linear_velocity = Vector2(-2000, 0)
+script = ExtResource("2_6s57v")
+
+[node name="Sprite2D" type="Sprite2D" parent="Rock"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_bftqu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rock"]
+position = Vector2(-4.99999, 0)
+rotation = 1.91463
+scale = Vector2(0.2, 0.2)
+shape = SubResource("CapsuleShape2D_frwrj")

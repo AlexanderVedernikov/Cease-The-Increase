@@ -6,7 +6,7 @@ using System.Numerics;
 public partial class Player : CharacterBody2D
 {
 	private float _runSpeed = 350;
-    private float _jumpStrength = -700;
+    private float _jumpStrength = -1100;
     private float _longJump = -30;
     private float _gravity = 3500;
     private int _direction = 1;
