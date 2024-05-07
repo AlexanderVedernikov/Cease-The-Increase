@@ -10,12 +10,15 @@ public partial class Player : CharacterBody2D
     private float _longJump = -30;
     private float _gravity = 3500;
     private int _direction = 1;
+    private int _playerHealth = 100;
+    
 
     //The number of seconds the player has been idle (not moving)
     private double _idleTimer = 0;
     private AnimatedSprite2D _idleAnimation;
     private Sprite2D characterSprite;
     private Sprite2D crouchingSprite;
+    
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -26,11 +29,16 @@ public partial class Player : CharacterBody2D
         characterSprite.Show();
         _idleAnimation.Hide();
         crouchingSprite.Hide();
+        
+        
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame (in seconds).
 	public override void _Process(double delta)
 	{
+        
+        
         if (_idleTimer < 2){
             _idleTimer += delta; //Controls idle animation
         }

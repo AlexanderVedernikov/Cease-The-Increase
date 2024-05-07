@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://wcnuudfmwa7s"]
+[gd_scene load_steps=6 format=3 uid="uid://wcnuudfmwa7s"]
 
 [ext_resource type="Script" path="res://node_2d.cs" id="1_o4d1t"]
 [ext_resource type="PackedScene" uid="uid://btad8547dd016" path="res://Player.tscn" id="2_prvr4"]
 [ext_resource type="PackedScene" uid="uid://c0o1itwx5dsir" path="res://Level1/Level1.tscn" id="2_wuhse"]
 [ext_resource type="PackedScene" uid="uid://c3t13qckex06a" path="res://Boss1.tscn" id="4_22im6"]
+[ext_resource type="PackedScene" uid="uid://do6mfxpbmo7y8" path="res://HUD.tscn" id="5_ee25a"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_o4d1t")
 
 [node name="Level" parent="." instance=ExtResource("2_wuhse")]
+
+[node name="Node2D" parent="." instance=ExtResource("4_22im6")]
+position = Vector2(1855, 474)
 
 [node name="Player" parent="." instance=ExtResource("2_prvr4")]
 position = Vector2(500, 874)
@@ -22,5 +26,15 @@ limit_bottom = 1080
 limit_smoothed = true
 position_smoothing_enabled = true
 
-[node name="Node2D" parent="." instance=ExtResource("4_22im6")]
-position = Vector2(1855, 474)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" parent="CanvasLayer" instance=ExtResource("5_ee25a")]
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 1
+grow_vertical = 1
+metadata/_edit_use_anchors_ = true

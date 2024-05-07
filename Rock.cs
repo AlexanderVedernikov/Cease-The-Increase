@@ -8,7 +8,7 @@ public partial class Rock : RigidBody2D
 	public override void _Ready()
 	{
 		_Rock = GetNode<RigidBody2D>("Rock");
-		//_Rock.LinearVelocity = Vector2.Left * 1000;
+		//_Rock.LinearVelocity = Vector2.Left * 1000; <- I have no clue why this doesn't work or what it is
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
