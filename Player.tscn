@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://btad8547dd016"]
+[gd_scene load_steps=16 format=3 uid="uid://btad8547dd016"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_sty4c"]
 [ext_resource type="Texture2D" uid="uid://cwqsobiyt27ne" path="res://Swordsman/Swordsman.png" id="2_ltwk0"]
@@ -40,7 +40,7 @@ region = Rect2(3200, 0, 320, 320)
 [sub_resource type="SpriteFrames" id="SpriteFrames_3x3w6"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 6.5,
 "texture": SubResource("AtlasTexture_2ee72")
 }, {
 "duration": 1.0,
@@ -72,6 +72,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n7yie"]
 size = Vector2(60, 155)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0vwv"]
+size = Vector2(75.294, 114.118)
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(500, 300)
 scale = Vector2(0.85, 0.85)
@@ -96,5 +99,11 @@ sprite_frames = SubResource("SpriteFrames_3x3w6")
 animation = &"IdleAnimation"
 frame_progress = 0.43644
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="StandingHitbox" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_n7yie")
+
+[node name="CrouchingHitbox" type="CollisionShape2D" parent="."]
+position = Vector2(2.35303, 20.5882)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_i0vwv")

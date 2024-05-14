@@ -11,6 +11,7 @@ public partial class Player : CharacterBody2D
     private float _gravity = 3500;
     private int _direction = 1;
     private int _playerHealth = 100;
+    private bool isCrouching = false;
     
 
     //The number of seconds the player has been idle (not moving)
@@ -18,6 +19,8 @@ public partial class Player : CharacterBody2D
     private AnimatedSprite2D _idleAnimation;
     private Sprite2D characterSprite;
     private Sprite2D crouchingSprite;
+    private CollisionShape2D standingHitBox;
+    private CollisionShape2D crouchingHitBox;
     
 
 	// Called when the node enters the scene tree for the first time.
@@ -26,11 +29,12 @@ public partial class Player : CharacterBody2D
         _idleAnimation = GetNode<AnimatedSprite2D>("IdleAnimation");
         characterSprite = GetNode<Sprite2D>("CharacterSprite");
         crouchingSprite = GetNode<Sprite2D>("CrouchingSprite");
+        standingHitBox = GetNode<CollisionShape2D>("StandingHitbox");
+        crouchingHitBox = GetNode<CollisionShape2D>("CrouchingHitbox");
+        crouchingHitBox.Disabled = true;
         characterSprite.Show();
         _idleAnimation.Hide();
         crouchingSprite.Hide();
-        
-        
 
 	}
 
@@ -38,16 +42,19 @@ public partial class Player : CharacterBody2D
 	public override void _Process(double delta)
 	{
         
-        
         if (_idleTimer < 2){
             _idleTimer += delta; //Controls idle animation
+            
         }
-		if (_idleTimer > 2 && !_idleAnimation.IsPlaying()){
+		if (_idleTimer >= 2 && !_idleAnimation.IsPlaying()){
+            
             characterSprite.Hide();
             _idleAnimation.Show();
             _idleAnimation.Play("IdleAnimation");
+            
         } else {
-            if (_idleAnimation.IsPlaying()){
+
+            if (_idleTimer < 2 && _idleAnimation.IsPlaying()){
             _idleAnimation.Stop();
             _idleAnimation.Hide();
             characterSprite.Show();
@@ -71,22 +78,42 @@ public partial class Player : CharacterBody2D
         }
 
         if (IsOnFloor() && jump){
-            newVel.Y += _jumpStrength;
+            if (isCrouching){
+                newVel.Y += _jumpStrength + 500;
+            } else {
+                newVel.Y += _jumpStrength;
+            }
+            
         } else if (jump && newVel.Y < 0){
             newVel.Y += _longJump;
         }
         
         if (right){
-            newVel.X += _runSpeed;
+            if (isCrouching && !IsOnFloor()){
+                newVel.X += _runSpeed - 200;
+            } else if(!isCrouching){
+                newVel.X += _runSpeed;
+            }
+            
         }
         if (left){
-            newVel.X -= _runSpeed;
+           if (isCrouching && !IsOnFloor()){
+                newVel.X -= _runSpeed - 200;
+            } else if(!isCrouching){
+                newVel.X -= _runSpeed;
+            }
         }
         if (down){ //Crouching animation
             characterSprite.Hide();
+            isCrouching = true;
+            crouchingHitBox.Disabled = false;
+            standingHitBox.Disabled = true;
             crouchingSprite.Show();
-        } else {
+        } else if (!_idleAnimation.IsPlaying()){
             crouchingSprite.Hide();
+            isCrouching = false;
+            crouchingHitBox.Disabled = true;
+            standingHitBox.Disabled = false;
             characterSprite.Show();
         }
 

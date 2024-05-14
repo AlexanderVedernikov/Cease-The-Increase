@@ -16,7 +16,6 @@ public partial class CeaseTheIncreasePlatform : StaticBody2D
 	{
 		if (!platformAnimation.IsPlaying()){
             platformAnimation.Play("PlatformAnimation");
-            GD.Print("AAAAAAAAAAAAAAAAAAAAAAA");
         }
 	}
 }
