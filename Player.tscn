@@ -100,10 +100,8 @@ animation = &"IdleAnimation"
 frame_progress = 0.43644
 
 [node name="StandingHitbox" type="CollisionShape2D" parent="."]
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_n7yie")
 
 [node name="CrouchingHitbox" type="CollisionShape2D" parent="."]
 position = Vector2(2.35303, 20.5882)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_i0vwv")
