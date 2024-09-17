@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://do6mfxpbmo7y8"]
+[gd_scene load_steps=4 format=3 uid="uid://do6mfxpbmo7y8"]
 
+[ext_resource type="Script" path="res://HealthBar.cs" id="1_1a3vu"]
 [ext_resource type="Texture2D" uid="uid://cyvc8ckam2mma" path="res://HeadsUpDisplay/TempUI_Empty.png" id="1_q13sw"]
 [ext_resource type="Texture2D" uid="uid://dm8ugu43c22iu" path="res://HeadsUpDisplay/TempUI_Bar.png" id="2_sa8ua"]
 
@@ -14,13 +15,14 @@ grow_vertical = 2
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2(-8, -476)
 scale = Vector2(0.5, 0.5)
+script = ExtResource("1_1a3vu")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Node2D"]
+[node name="Healthbar" type="TextureProgressBar" parent="Node2D"]
 offset_left = 16.0
 offset_top = 2214.0
 offset_right = 916.0
 offset_bottom = 3114.0
-value = 80.0
+value = 100.0
 texture_under = ExtResource("1_q13sw")
 texture_progress = ExtResource("2_sa8ua")
 texture_progress_offset = Vector2(0, -10)

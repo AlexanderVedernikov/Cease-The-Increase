@@ -10,7 +10,6 @@ public partial class Player : CharacterBody2D
     private float _longJump = -30;
     private float _gravity = 3500;
     private int _direction = 1;
-    private int _playerHealth = 100;
     private bool isCrouching = false;
     
 
