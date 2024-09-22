@@ -15,6 +15,6 @@ public partial class HealthBar : Node2D
 	public override void _Process(double delta)
 	{
 		HealthBarVar.Value = Globals.Instance.playerHealth;
-		Globals.Instance.playerHealth -= 3 * delta;
+		
 	}
 }

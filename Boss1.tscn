@@ -8,8 +8,8 @@
 size = Vector2(276, 368)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_frwrj"]
-radius = 293.449
-height = 919.239
+radius = 62.2255
+height = 185.262
 
 [node name="Node2D" type="CharacterBody2D"]
 position = Vector2(1756, 745)
@@ -36,6 +36,5 @@ texture = ExtResource("3_ss70g")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Rock"]
 position = Vector2(1.00136e-05, -1)
 rotation = 2.35619
-scale = Vector2(0.2, 0.2)
 shape = SubResource("CapsuleShape2D_frwrj")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)

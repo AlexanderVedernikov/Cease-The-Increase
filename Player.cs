@@ -6,11 +6,12 @@ using System.Numerics;
 public partial class Player : CharacterBody2D
 {
 	private float _runSpeed = 350;
-    private float _jumpStrength = -1100;
-    private float _longJump = -30;
-    private float _gravity = 3500;
+    private float _jumpStrength = -700;
+    private float _longJump = -15;
+    private float _gravity = 1500;
     private int _direction = 1;
     private bool isCrouching = false;
+    private bool isOnGround = false;
     
 
     //The number of seconds the player has been idle (not moving)
@@ -76,7 +77,7 @@ public partial class Player : CharacterBody2D
             _idleTimer = 0;
         }
 
-        if (IsOnFloor() && jump){
+        if (isOnGround && jump){
             if (isCrouching){
                 newVel.Y += _jumpStrength + 500;
             } else {
@@ -88,7 +89,7 @@ public partial class Player : CharacterBody2D
         }
         
         if (right){
-            if (isCrouching && !IsOnFloor()){
+            if (isCrouching && !isOnGround){
                 newVel.X += _runSpeed - 200;
             } else if(!isCrouching){
                 newVel.X += _runSpeed;
@@ -96,7 +97,7 @@ public partial class Player : CharacterBody2D
             
         }
         if (left){
-           if (isCrouching && !IsOnFloor()){
+           if (isCrouching && !isOnGround){
                 newVel.X -= _runSpeed - 200;
             } else if(!isCrouching){
                 newVel.X -= _runSpeed;
@@ -135,6 +136,19 @@ public partial class Player : CharacterBody2D
         GetInput();
 
         // Magic method to update player's pos and resolve collision
-        MoveAndSlide();
+        var collision = MoveAndCollide(Velocity * (float)delta);
+        
+        if (collision != null){
+            Velocity = Velocity.Slide(collision.GetNormal());
+        }
+        if ((collision != null) && (((Node)collision.GetCollider()).Name == "Level")){
+                isOnGround = true;
+            } else {
+                isOnGround = false;
+            }
+        if ((collision != null) && (((Node)collision.GetCollider()).Name == "Rock")){
+                Globals.Instance.playerHealth -= 10;
+            }
+
     }
 }
